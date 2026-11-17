@@ -37,7 +37,19 @@ const snap = JSON.parse(readFileSync(resolve(input), "utf8"));
 const board = buildBoard(snap);
 
 // Rebuild the output directory from scratch so stale files can never leak in.
-rmSync(outDir, { recursive: true, force: true });
+// Clear only its contents: the grader runs as an unprivileged user and cannot
+// rmdir the output directory itself (its parent / is not writable by that
+// user), so rmSync(outDir) throws EACCES and the run fails.
+mkdirSync(outDir, { recursive: true });
+for (const entry of readdirSync(outDir)) {
+  try {
+    rmSync(join(outDir, entry), { recursive: true, force: true });
+  } catch (err) {
+    throw new Error(
+      `cannot clear stale output entry ${entry}: ${(err as Error).message}`,
+    );
+  }
+}
 mkdirSync(join(outDir, "dashboard"), { recursive: true });
 mkdirSync(join(outDir, "screenshots"), { recursive: true });
 
