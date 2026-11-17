@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <h1><span class="dot">◉</span> Token Launch Radar</h1>
+  <p class="sub">Which pre-token protocol is worth farming next — and what to do about it. 200 protocols, ranked by what a launch would be worth.</p>
+</header>
+
+<section class="method">
+  <h2>How the radar works</h2>
+  <p><b>Implied value = TVL × peer multiple × growth × maturity × chains.</b> The peer multiple is the median market-cap/TVL of live-token protocols in the same category (global median when a category has fewer than 3 peers). Growth adjusts for 7-day TVL change, maturity for how long the protocol has run, chains for how many chains it spans. Every figure comes from the sealed snapshot alone — no hardcoded names.</p>
+  <p class="fine">Snapshot as of <b id="asof">2026-11-14</b> (DefiLlama). “Records no token” means the snapshot records none — it is the record, not proof the protocol has none. 178 rows pass the strict watchlist rule; 22 more pre-token rows below the floor are included and flagged, so the board reaches 200. Implied values are this entry’s own claim, not a prediction that a token will launch.</p>
+</section>
+
+<section class="filters" id="filters">
+  <label>Category <select id="fCat"></select></label>
+  <label>Chain <select id="fChain"></select></label>
+  <label>Min TVL $ <input id="fTvl" type="number" min="0" step="1000000" placeholder="0"></label>
+  <label>Search <input id="fQ" type="search" placeholder="name or slug"></label>
+  <label class="chk"><input id="fWl" type="checkbox"> Watchlist only</label>
+  <span id="count" class="count"></span>
+</section>
+
+<section id="detail" hidden></section>
+
+<main>
+<table id="board">
+  <thead><tr>
+    <th data-k="rank">#</th><th data-k="name">Protocol</th><th data-k="category">Category</th>
+    <th data-k="chains">Chains</th><th data-k="tvl" class="num">TVL</th><th data-k="chg" class="num">7d</th>
+    <th data-k="value" class="num">Implied value</th><th data-k="mult" class="num">Multiple</th>
+  </tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+<p class="hint">Click a row for its detail view and farm plan. Click a column header to sort.</p>
+</main>
+
+<footer>Token Launch Radar — built for the make.fun token-radar-01 bounty. Values are this entry’s own model, computed from the 2026-11-14 snapshot.</footer>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
